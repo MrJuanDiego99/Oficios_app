@@ -1,0 +1,135 @@
+<!-- **********pagina principal que se muestra despues del login************ -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="dashboard">Inicio</a>
+    <a class="navbar-brand" href="dashboard">Mis reservas</a>
+    <a class="navbar-brand" href="dashboard">PQRS</a>
+    <a class="navbar-brand" href="dashboard">Mi informacion</a>
+    <a class="navbar-brand" href="login">Login</a>
+    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- <button *ngIf="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Registar</button> -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal"data-bs-target="#exampleModal">Registar</button>
+    </div>
+  </div>
+</nav>
+<br>
+
+<div class="container">
+  <hr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombres</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Oficio</th>
+        <th scope="col">Detalle</th>
+        <th scope="col">Valor servicio</th>
+        <th scope="col">Celular</th>
+        <th scope="col">Coreo</th>
+        <th scope="col">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of servicioUsuario.serviciosusu; let i = index">
+        <th>{{ i + 1 }}</th>
+        <td>{{item.nombres}}</td>
+        <td>{{item.apellidos}}</td>
+        <td>{{item.oficio}}</td>
+        <td>{{item.detalle}}</td>
+        <td>{{item.precio_servicio}}</td>
+        <td>{{item.celular}}</td>
+        <td>{{item.correo}}</td>
+        <td><button type="button" class="btn btn-success">Contratar</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<!-- **********modal del formulario para agregar personas con su respectivo rol************ -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Formulario de Registro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="idNumber" class="form-label">Número de Identificación</label>
+            <input type="number" class="form-control" id="num_identificacion" [(ngModel)]="selectedUsu.num_identificacion" [ngModelOptions]="{standalone: true}" placeholder="Ingresa tu número de identificación">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Clave</label>
+            <input type="password" class="form-control" id="clave" [(ngModel)]="selectedUsu.clave" [ngModelOptions]="{standalone: true}" placeholder="Ingresa tu clave">
+          </div>
+          <div class="mb-3">
+            <label for="firstName" class="form-label">Nombres</label>
+            <input type="text" class="form-control" id="nombres" [(ngModel)]="selectedUsu.nombres" [ngModelOptions]="{standalone: true}"placeholder="Ingresa tus nombres">
+          </div>
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos" [(ngModel)]="selectedUsu.apellidos" [ngModelOptions]="{standalone: true}" placeholder="Ingresa tus apellidos">
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Celular</label>
+            <input type="tel" class="form-control" id="celular" [(ngModel)]="selectedUsu.celular" [ngModelOptions]="{standalone: true}" placeholder="Ingresa tu número de celular">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="correo" [(ngModel)]="selectedUsu.correo" [ngModelOptions]="{standalone: true}" placeholder="Ingresa tu correo electrónico">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label" >Dirección</label>
+            <input type="text" class="form-control" id="direccion" [(ngModel)]="selectedUsu.direccion" [ngModelOptions]="{standalone: true}" placeholder="Ingresa tu dirección">
+          </div>
+          <div class="mb-3">
+            <label for="role" class="form-label">Rol</label>
+            <div id="role">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="role" id="userRole" value="U"
+                  [(ngModel)]="selectedUsu.rol">
+                <label class="form-check-label" for="userRole">Usuario</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="role" id="workerRole" value="T"
+                  [(ngModel)]="selectedUsu.rol">
+                <label class="form-check-label" for="workerRole">Trabajador</label>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="selectedUsu.rol === 'T'">
+            <label for="oficio" class="form-label">Oficio</label>
+            <select class="form-select" id="id_oficio" [(ngModel)]="selectedUsuSer.id_oficio" [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let item of oficios.oficios" [value]="item.id_oficio | number">{{ item.detalle }}</option>
+            </select>
+          </div>
+          <br *ngIf="selectedUsu.rol === 'T'">
+
+          <div class="form-floating" *ngIf="selectedUsu.rol === 'T'">
+            <textarea class="form-control"  id="detalle" [(ngModel)]="selectedUsuSer.detalle" [ngModelOptions]="{standalone: true}"></textarea>
+            <label for="floatingTextarea">Detalles del servicio</label>
+          </div>
+          <br *ngIf="selectedUsu.rol === 'T'">
+
+          <div class="mb-3" *ngIf="selectedUsu.rol === 'T'">
+            <label for="precio" class="form-label">Precio</label>
+            <input type="number" [placeholder]="'Ecriba el valor sin puntos ni signo de pesos'" class="form-control" id="precio_servicio" [(ngModel)]="selectedUsuSer.precio_servicio" [ngModelOptions]="{standalone: true}" placeholder="Ingresa tu número de identificación">
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="btnguardar()" >Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
