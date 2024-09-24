@@ -1,4 +1,4 @@
-<!-- **********pagina principal que se muestra despues del login************ -->
+<!-- **********Barra de menu que se muestra en todas las paginas************ -->
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
     <a class="navbar-brand" href="dashboard">Inicio</a>
@@ -6,47 +6,170 @@
     <a class="navbar-brand" href="dashboard">PQRS</a>
     <a class="navbar-brand" href="dashboard">Mi informacion</a>
     <a class="navbar-brand" href="login">Login</a>
-    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button> -->
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- <button *ngIf="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Registar</button> -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal"data-bs-target="#exampleModal">Registar</button>
+      <button *ngIf="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Registar</button>
+      <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"data-bs-target="#exampleModal">Registar</button> -->
     </div>
   </div>
 </nav>
 <br>
 
-<div class="container">
-  <hr>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nombres</th>
-        <th scope="col">Apellidos</th>
-        <th scope="col">Oficio</th>
-        <th scope="col">Detalle</th>
-        <th scope="col">Valor servicio</th>
-        <th scope="col">Celular</th>
-        <th scope="col">Coreo</th>
-        <th scope="col">Opciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of servicioUsuario.serviciosusu; let i = index">
-        <th>{{ i + 1 }}</th>
-        <td>{{item.nombres}}</td>
-        <td>{{item.apellidos}}</td>
-        <td>{{item.oficio}}</td>
-        <td>{{item.detalle}}</td>
-        <td>{{item.precio_servicio}}</td>
-        <td>{{item.celular}}</td>
-        <td>{{item.correo}}</td>
-        <td><button type="button" class="btn btn-success">Contratar</button></td>
-      </tr>
-    </tbody>
-  </table>
+<!-- **********Vista personas con el rol de ADMIN************ -->
+
+<div class="container-fluid" *ngIf="admin" style="margin-left: 10px; margin-right: 0;">
+  <!-- <div class="container-fluid"  style="margin-left: 50px; margin-right: 0;"> -->
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Personas registradas</h2>
+      <hr>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Persona</th>
+            <th scope="col">Identificacion</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Rol</th>
+            <th scope="col">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of peradmin; let i = index">
+            <th>{{ i + 1 }}</th>
+            <td>{{item.nombres}}  {{item.apellidos}} </td>
+            <td>{{item.num_identificacion}}</td>
+            <td>{{item.celular}}</td>
+            <td>{{item.correo}}</td>
+            <td>{{item.direccion}}</td>
+            <td>{{item.rol}}</td>
+            <td>
+              <button type="button" class="btn btn-success">Ver mas</button> &nbsp;
+              <button type="button" class="btn btn-info">Editar</button> &nbsp;
+              <button type="button" class="btn btn-danger">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- **********Vista personas con el rol de CLIENTES************ -->
+
+<div class="container-fluid" *ngIf="cliente" style="margin-left: 50px; margin-right: 0;">
+<!-- <div class="container-fluid"  style="margin-left: 50px; margin-right: 0;"> -->
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Oferta de servicios</h2>
+      <hr>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Oficio</th>
+            <th scope="col">Detalle</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Valor sugerido</th>
+            <th scope="col">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of servicioUsuario; let i = index">
+            <th>{{ i + 1 }}</th>
+            <td>{{item.nombres}}</td>
+            <td>{{item.apellidos}}</td>
+            <td>{{item.oficio}}</td>
+            <td>{{item.detalle}}</td>
+            <td>{{item.celular}}</td>
+            <td>{{item.correo}}</td>
+            <td>
+              <div class="input-group">
+                <input type="checkbox" [(ngModel)]="item.editable" class="form-check-input checkbox-inline">
+                <input type="number" [(ngModel)]="item.precio_servicio" class="form-control input-inline" [disabled]="!item.editable" placeholder="{{ item.precio_servicio }}">
+              </div>
+            </td>
+            <td><button type="button" class="btn btn-success" (click)="contratar(item)">Contratar</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-5">
+      <h2>Mis servicios</h2>
+      <hr>
+      <h5 *ngIf="!mensaje">¡No tienes servicios contratados!</h5>
+      <table class="table table-striped" *ngIf="mensaje">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Detalle</th>
+            <th scope="col">Valor servicio</th>
+            <th scope="col">Responsable</th>
+            <th scope="col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of servsoli; let i = index">
+            <th>{{ i + 1 }}</th>
+            <td>{{item.detalle}}</td>
+            <td>{{item.valor_servicio}}</td>
+            <td>{{item.responsable}}</td>
+            <td>{{item.estado}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- **********Vista personas con el rol de TRABAJADOR ************ -->
+<div class="container-fluid" *ngIf="trabajador" style="margin-left: 50px; margin-right: 0;">
+  <!-- <div class="container-fluid"  style="margin-left: 50px; margin-right: 0;"> -->
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Solicitudes</h2>
+      <hr>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Detalle</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of soliserv; let i = index">
+            <th>{{ i + 1 }}</th>
+            <td>{{item.nombres}}{{item.apellidos}} </td>
+            <td>{{item.celular}}</td>
+            <td>{{item.direccion}}</td>
+            <td>{{item.correo}}</td>
+            <td>{{item.valor_servicio}}</td>
+            <td>{{item.detalle}}</td>
+            <td>{{item.estado}}</td>
+            <td>
+              <button type="button" class="btn btn-success">Aceptar</button> &nbsp;
+              <button type="button" class="btn btn-danger">Rechazar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 
@@ -93,33 +216,38 @@
             <label for="role" class="form-label">Rol</label>
             <div id="role">
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="role" id="userRole" value="U"
+                <input class="form-check-input" type="radio" name="role" id="userRole" value="C"
                   [(ngModel)]="selectedUsu.rol">
-                <label class="form-check-label" for="userRole">Usuario</label>
+                <label class="form-check-label" for="userRole">Cliente</label>
               </div>
               <div class="form-check">
                 <input class="form-check-input" type="radio" name="role" id="workerRole" value="T"
                   [(ngModel)]="selectedUsu.rol">
                 <label class="form-check-label" for="workerRole">Trabajador</label>
               </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="role" id="workerRole" value="D"
+                  [(ngModel)]="selectedUsu.rol">
+                <label class="form-check-label" for="workerRole">Cliente-Trabajador</label>
+              </div>
             </div>
           </div>
 
-          <div *ngIf="selectedUsu.rol === 'T'">
+          <div *ngIf="selectedUsu.rol === 'T' || selectedUsu.rol === 'D'">
             <label for="oficio" class="form-label">Oficio</label>
             <select class="form-select" id="id_oficio" [(ngModel)]="selectedUsuSer.id_oficio" [ngModelOptions]="{standalone: true}">
               <option *ngFor="let item of oficios.oficios" [value]="item.id_oficio | number">{{ item.detalle }}</option>
             </select>
           </div>
-          <br *ngIf="selectedUsu.rol === 'T'">
+          <br *ngIf="selectedUsu.rol === 'T' || selectedUsu.rol === 'D'">
 
-          <div class="form-floating" *ngIf="selectedUsu.rol === 'T'">
+          <div class="form-floating" *ngIf="selectedUsu.rol === 'T' || selectedUsu.rol === 'D'">
             <textarea class="form-control"  id="detalle" [(ngModel)]="selectedUsuSer.detalle" [ngModelOptions]="{standalone: true}"></textarea>
             <label for="floatingTextarea">Detalles del servicio</label>
           </div>
-          <br *ngIf="selectedUsu.rol === 'T'">
+          <br *ngIf="selectedUsu.rol === 'T' || selectedUsu.rol === 'D'">
 
-          <div class="mb-3" *ngIf="selectedUsu.rol === 'T'">
+          <div class="mb-3" *ngIf="selectedUsu.rol === 'T' || selectedUsu.rol === 'D'">
             <label for="precio" class="form-label">Precio</label>
             <input type="number" [placeholder]="'Ecriba el valor sin puntos ni signo de pesos'" class="form-control" id="precio_servicio" [(ngModel)]="selectedUsuSer.precio_servicio" [ngModelOptions]="{standalone: true}" placeholder="Ingresa tu número de identificación">
           </div>

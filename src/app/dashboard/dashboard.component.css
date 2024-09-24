@@ -1,0 +1,21 @@
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-inline {
+  margin-right: 8px; /* Espacio entre el checkbox y el input */
+}
+
+.input-inline {
+  width: 30px; /* Ajusta este valor para cambiar el ancho */
+  margin-left: 8px; /* Espacio entre el checkbox y el input */
+}
+
+.table-container {
+  margin-right: 20px; /* Ajusta este valor según sea necesario */
+}
+
+.table-container-right {
+  margin-left: 20px; /* Si también quieres margen en la segunda tabla */
+}

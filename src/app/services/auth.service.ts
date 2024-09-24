@@ -51,6 +51,25 @@ export class AuthService {
   servicioUsuario(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/servicioUsuario");
   }
-}
 
+  //-----------------************************-----------
+  agregarServicio(formulario: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + "/servicio", {formulario});
+  }
+
+  //-----------------************************-----------
+  servsoli(id_usuario: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + "/servsoli", {id_usuario});
+  }
+
+  //-----------------************************-----------
+  soliserv(id_usuario: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + "/soliserv", {id_usuario});
+  }
+
+  //-----------------************************-----------
+  peradmin(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + "/peradmin");
+  }
+}
 
