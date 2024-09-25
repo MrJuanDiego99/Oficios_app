@@ -43,8 +43,18 @@ export class AuthService {
   }
 
   //-----------------************************-----------
+  documentos(): Observable<any> {
+    return this.http.get<any>(this.apiUrl + "/documentos");
+  }
+
+  //-----------------************************-----------
   agregarPersona(formulario: any, formulario2: any): Observable<any> {
     return this.http.post<any>(this.apiUrl + "/agregar", {formulario, formulario2});
+  }
+
+  //-----------------************************-----------
+  agregaroficio(formulario: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + "/agregaroficio", {formulario});
   }
 
   //-----------------************************-----------

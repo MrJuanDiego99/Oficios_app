@@ -6,9 +6,11 @@
     <a class="navbar-brand" href="dashboard">PQRS</a>
     <a class="navbar-brand" href="dashboard">Mi informacion</a>
     <a class="navbar-brand" href="login">Login</a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <button *ngIf="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Registar</button>
-      <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal"data-bs-target="#exampleModal">Registar</button> -->
+    <div class="collapse navbar-collapse w-100 d-flex justify-content-end" id="navbarSupportedContent">
+      <button *ngIf="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Registar usuario</button> &nbsp;
+      <button *ngIf="admin" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2" >Registar oficio</button>
+      <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Registrar usuario</button> &nbsp;
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">Registrar oficio</button> -->
     </div>
   </div>
 </nav>
@@ -46,7 +48,7 @@
             <td>{{item.rol}}</td>
             <td>
               <button type="button" class="btn btn-success">Ver mas</button> &nbsp;
-              <button type="button" class="btn btn-info">Editar</button> &nbsp;
+              <button type="button" class="btn btn-secondary">Editar</button> &nbsp;
               <button type="button" class="btn btn-danger">Eliminar</button>
             </td>
           </tr>
@@ -172,6 +174,53 @@
   </div>
 </div>
 
+<!-- **********modal del formulario para agregar personas con su respectivo rol************ -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Formulario de oficios</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <h6>Oficios activos</h6>
+                <hr>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Oficio</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of oficios; let i = index">
+                      <th>{{ i + 1 }}</th>
+                      <td>{{item.detalle}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+          <div class="mb-3">
+            <label for="oficio" class="form-label">Oficio</label>
+            <input type="text" class="form-control" id="oficio" [(ngModel)]="selectedOfic.oficio" [ngModelOptions]="{standalone: true}" placeholder="Ingresa un oficio nuevo">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="btnagregaroficio()" >Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- **********modal del formulario para agregar personas con su respectivo rol************ -->
@@ -184,6 +233,13 @@
       </div>
       <div class="modal-body">
         <form>
+          <div>
+            <label for="oficio" class="form-label">Tipo de documento</label>
+            <select class="form-select" id="id_tipo_documento" [(ngModel)]="selectedUsu.id_tipo_documento" [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let item of documentos" [value]="item.id_tipo_documento">{{ item.tipo_documento }}</option>
+            </select>
+          </div>
+          <br>
           <div class="mb-3">
             <label for="idNumber" class="form-label">Número de Identificación</label>
             <input type="number" class="form-control" id="num_identificacion" [(ngModel)]="selectedUsu.num_identificacion" [ngModelOptions]="{standalone: true}" placeholder="Ingresa tu número de identificación">
@@ -236,7 +292,7 @@
           <div *ngIf="selectedUsu.rol === 'T' || selectedUsu.rol === 'D'">
             <label for="oficio" class="form-label">Oficio</label>
             <select class="form-select" id="id_oficio" [(ngModel)]="selectedUsuSer.id_oficio" [ngModelOptions]="{standalone: true}">
-              <option *ngFor="let item of oficios.oficios" [value]="item.id_oficio | number">{{ item.detalle }}</option>
+              <option *ngFor="let item of oficios" [value]="item.id_oficio | number">{{ item.detalle }}</option>
             </select>
           </div>
           <br *ngIf="selectedUsu.rol === 'T' || selectedUsu.rol === 'D'">

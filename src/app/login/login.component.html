@@ -4,15 +4,18 @@
       <div class="card">
         <div class="card-body">
           <h2 class="text-center">Iniciar Sesión</h2>
+          <br>
           <form (ngSubmit)="login()">
             <div class="form-group">
               <label for="cedula">Cédula</label>
               <input type="text" id="cedula" class="form-control" [(ngModel)]="cedula" name="cedula" placeholder="Ingresa tu cédula" />
             </div>
+            <br>
             <div class="form-group">
               <label for="contrasena">Contraseña</label>
               <input type="password" id="contrasena" class="form-control" [(ngModel)]="contrasena" name="contrasena" placeholder="Ingresa tu contraseña" />
             </div>
+            <br>
             <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
           </form>
         </div>
