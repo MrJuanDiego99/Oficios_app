@@ -81,5 +81,16 @@ export class AuthService {
   peradmin(): Observable<any> {
     return this.http.get<any>(this.apiUrl + "/peradmin");
   }
+
+  //-----------------************************-----------
+  aceptar(id_servicio: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + "/aceptar", {id_servicio});
+  }
+
+  //-----------------************************-----------
+  rechazar(id_servicio: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + "/rechazar", {id_servicio});
+  }
+
 }
 

@@ -187,23 +187,41 @@ constructor(private authService: AuthService, private router: Router) {}
  }
 
  //-------------Manda la info para crear--------------------
- btnguardar(){
-  var formulario = this.selectedUsu
-  var formulario2 = this.selectedUsuSer
-  this.authService.agregarPersona(formulario, formulario2).subscribe(
-    (response) => {
-      if (response) {
-        console.log("Guardado con exito", response);
-        alert('Guardado con exito');
-        location.reload()
-      }
-    },
-      (error) => {
-        console.error('Error al hacer la solicitud', error);
-        alert('Error al hacer la solicitud');
-      }
-  );
- }
+ btnguardar() {
+  if (this.selectedUsu.id_tipo_documento && this.selectedUsu.num_identificacion &&
+      this.selectedUsu.clave && this.selectedUsu.nombres &&
+      this.selectedUsu.apellidos && this.selectedUsu.celular &&
+      this.selectedUsu.correo && this.selectedUsu.direccion &&
+      this.selectedUsu.rol) {
+
+    if ((this.selectedUsu.rol === 'T' || this.selectedUsu.rol === 'D') &&
+        (!this.selectedUsuSer.id_oficio || !this.selectedUsuSer.detalle || !this.selectedUsuSer.precio_servicio)) {
+      alert("Por favor completa todos los campos del servicio.");
+
+    } else {
+      var formulario = this.selectedUsu;
+      var formulario2 = this.selectedUsuSer;
+
+      this.authService.agregarPersona(formulario, formulario2).subscribe(
+        (response) => {
+          if (response == 1) {
+            alert('YA EXISTE EN EL SISTEMA NO SE PUEDE DUPLICAR');
+          }else{
+            console.log("Guardado con éxito", response);
+            alert('Guardado con éxito');
+            location.reload();
+          }
+        },
+        (error) => {
+          console.error('Error al hacer la solicitud', error);
+          alert('Error al hacer la solicitud');
+        }
+      );
+    }
+  } else {
+    alert("Por favor completa todos los campos obligatorios.");
+  }
+}
 
  //-------------Manda la info para crear oficio--------------------
  btnagregaroficio(){
@@ -213,7 +231,6 @@ constructor(private authService: AuthService, private router: Router) {}
       if (response) {
         console.log("Guardado con exito", response);
         alert('Guardado con exito');
-        location.reload()
       }
     },
       (error) => {
@@ -238,7 +255,6 @@ constructor(private authService: AuthService, private router: Router) {}
       if (response) {
         console.log("Guardado con exito", response);
         alert('Solicitud realizada con éxito');
-        location.reload()
       }
     },
       (error) => {
@@ -248,6 +264,42 @@ constructor(private authService: AuthService, private router: Router) {}
   );
  }
 
+ //-------------Manda la info para contratar--------------------
+ aceptar(item: any){
+  var id_servicio = item.id_servicio
+  console.log(id_servicio);
+
+  this.authService.aceptar(id_servicio).subscribe(
+    (response) => {
+      if (response) {
+        console.log("Guardado con exito", response);
+        alert('Acción ejecutada de manera exitosa');
+      }
+    },
+      (error) => {
+        console.error('Error al hacer la solicitud', error);
+        alert('Error al hacer la solicitud');
+      }
+  );
+ }
+
+ rechazar(item: any){
+  var id_servicio = item.id_servicio
+  console.log(id_servicio);
+
+  this.authService.rechazar(id_servicio).subscribe(
+    (response) => {
+      if (response) {
+        console.log("Guardado con exito", response);
+        alert('Acción ejecutada de manera exitosa');
+      }
+    },
+      (error) => {
+        console.error('Error al hacer la solicitud', error);
+        alert('Error al hacer la solicitud');
+      }
+  );
+ }
 
 
 
